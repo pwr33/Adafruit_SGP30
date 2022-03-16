@@ -42,14 +42,16 @@ Adafruit_SGP30::Adafruit_SGP30() {}
  *  @param  initSensor
  *          Optional pointer to prevent IAQinit to be called. Used for Deep
  *          Sleep.
+ *  @param  initWire
+            optional boolean to call Wire.begin() or not if already done in calling prog
  *  @return True if SGP30 found on I2C, False if something went wrong!
  */
-boolean Adafruit_SGP30::begin(TwoWire *theWire, boolean initSensor) {
+boolean Adafruit_SGP30::begin(TwoWire *theWire, boolean initSensor, bool initWire) {
   if (i2c_dev) {
     delete i2c_dev; // remove old interface
   }
 
-  i2c_dev = new Adafruit_I2CDevice(SGP30_I2CADDR_DEFAULT, theWire);
+  i2c_dev = new Adafruit_I2CDevice(SGP30_I2CADDR_DEFAULT, theWire, initWire);
 
   if (!i2c_dev->begin()) {
     return false;
